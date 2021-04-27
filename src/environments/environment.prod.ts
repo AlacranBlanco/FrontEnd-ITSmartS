@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  baseUrl: "https://prueba-itsmarts.herokuapp.com/api"
 };

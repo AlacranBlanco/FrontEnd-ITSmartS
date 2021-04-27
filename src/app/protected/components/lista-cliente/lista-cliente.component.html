@@ -1,0 +1,46 @@
+<h1>Listado Clientes</h1>
+
+    <p-table #clienteslist  id="clienteslist"  [value]="clientes" styleClass="p-datatable-customers" [rowHover]="true" [rows]="10" 
+    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" 
+    [paginator]="true" currentPageReportTemplate="Mostrando {first} de los {last} de {totalRecords} registros"
+    [filterDelay]="0" [globalFilterFields]="['name','phoneNumber','email']"
+    >
+    <ng-template pTemplate="caption">
+        <div class="table-header">
+            Lista de Clientes
+            
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="clienteslist.filterGlobal($any($event.target).value, 'contains')"  placeholder="Buscar" />
+            </span>
+            <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success p-mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+            <button pButton pRipple type="button" label="Nuevo" class="p-button-outlined p-button-info" [routerLink]="['/cliente/nuevo']"></button>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="name" id="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+            <th pSortableColumn="phoneNumber" id="phoneNumber">Teléfono <p-sortIcon field="phoneNumber"></p-sortIcon></th>
+            <th pSortableColumn="email" id="email" >Correo <p-sortIcon field="email"></p-sortIcon></th>
+            <th pSortableColumn="creation" id="creation">Creación <p-sortIcon field="creation"></p-sortIcon></th>
+            <th pSortableColumn="lat" id="lat">Lat <p-sortIcon field="lat"></p-sortIcon></th>
+            <th pSortableColumn="lng" id="lng">Lng <p-sortIcon field="lng"></p-sortIcon>    </th>
+            <th id="acciones">Acciones</th>
+            
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-cliente let-rowIndex="rowIndex">
+        <tr>
+            <td>{{cliente.name}} {{cliente.mName}} {{cliente.lName}}</td>
+            <td>{{cliente.phoneNumber}}</td>
+            <td>{{cliente.email}}</td>
+            <td>{{cliente.creation}}</td>
+            <td>{{cliente.lat | number}}</td>
+            <td>{{cliente.lng | number}}</td>
+            <td>
+                <button pButton pRipple type="button" label="Editar" class="p-button-outlined p-button-info p-mr-2" [routerLink]="['/cliente/editar', cliente._id]"></button>
+                <button pButton pRipple type="button" label="Eliminar" class="p-button-outlined p-button-danger" (click)="eliminar(cliente._id, rowIndex)" pTooltip="PDF" tooltipPosition="bottom"></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

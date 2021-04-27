@@ -1,0 +1,56 @@
+<h1>Editar Cliente</h1>
+<hr>
+<br>
+<div class="p-grid">
+    <div class="p-col p-md-6">
+        <p-fieldset legend="Nuevo" [toggleable]="true">
+            <form (ngSubmit)="editar()" autocomplete="off" [formGroup]="miForm">
+                <div class="p-fluid p-formgrid p-grid">
+                    <div class="p-field p-col-12 p-md-4">
+                            <label  for="Nombre">Nombre</label>
+                            <input id="Nombre" type="text" pInputText formControlName="name"> 
+                        </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="A_paterno">A_paterno</label>
+                        <input id="A_paterno" type="text" pInputText formControlName="mName"> 
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="A_Materno">A_Materno</label>
+                        <input id="A_Materno" type="text" pInputText formControlName="lName"> 
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="Teléfono">Teléfono</label>
+                        <input id="Teléfono" type="text" pInputText formControlName="phoneNumber"> 
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="Correo">Correo</label>
+                        <input id="Correo" type="email" pInputText formControlName="email"> 
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="fecha">Fecha de Modificación </label>
+                        <input id="fecha" type="text" pInputText readonly formControlName="creation"> 
+                    </div>
+                    <div class="p-field p-col-12 p-md-6">
+                        <label for="Latitud">Latitud</label>
+                        <input id="Latitud" type="text" pInputText readonly formControlName="lat"> 
+                    </div>
+                    <div class="p-field p-col-12 p-md-6">
+                        <label for="Longitud">Longitud</label>
+                        <input id="Longitud" type="text" pInputText readonly formControlName="lng"> 
+                        
+                    </div>
+                    <div class="p-field p-sm-12">
+                        <button pButton pRipple type="submit" label="Editar" class="float-end p-button-info" [disabled]="!miForm.valid"></button>
+                    </div>
+                </div>
+            </form>
+        </p-fieldset>
+    </div>
+
+    <div class="p-col p-md-6 p-sm-12">
+        <p-fieldset legend="Ubicar Cliente" [toggleable]="true">
+            <div class="mapa" id="mapContainer" ></div>
+        </p-fieldset>
+    </div>
+   
+</div>

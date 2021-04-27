@@ -1,0 +1,19 @@
+<div class="demo-container p-p-4 p-text-center p-grid">  
+        <p-fieldset legend="Login" [toggleable]="true">
+            <form [formGroup]="miForm"(ngSubmit)="login()" autocomplete="off">
+            <div class="p-fluid">
+                <div class="p-field">
+                    <label for="firstname1">Usuario</label>
+                    <input id="firstname1" type="text" pInputText formControlName="name"> 
+                </div>
+                <div class="p-field">
+                    <label for="lastname1">Contraseña</label>
+                    <input id="lastname1" type="password" pInputText formControlName="password"> 
+                </div>
+                <div class="p-field p-sm-12">
+                    <button pButton pRipple type="submit" label="Guardar" class="float-end p-button-info" [disabled]="miForm.invalid"></button>
+                </div>
+            </div>
+        </form>
+        </p-fieldset> 
+</div>
