@@ -53,7 +53,7 @@ export class EditarClienteComponent implements OnInit {
       let platform = new H.service.Platform({
         'apikey': 'YhA5xgsmd3zKjwc0-wajWqUaTNXNyIp74swdc6DESQk',
         'appId': 'zJuDEWCknuHO55skIhvr'
-      });
+      }); 
 
       // Obtain the default map types from the platform object:
       let defaultLayers = platform.createDefaultLayers();
