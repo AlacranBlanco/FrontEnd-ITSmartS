@@ -10,4 +10,5 @@ export interface Cliente {
     viewportX:   number;
     viewportY:   number;
     creation:    string;
+    image:       string;
 }

@@ -12,6 +12,8 @@ import {CheckboxModule} from 'primeng/checkbox';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {DropdownModule} from 'primeng/dropdown';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import {FileUploadModule} from 'primeng/fileupload';
+import { MessagesModule } from 'primeng/messages';
 
 @NgModule({
   exports: [
@@ -25,7 +27,9 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     CheckboxModule,
     RadioButtonModule,
     DropdownModule,
-    InputTextareaModule
+    InputTextareaModule,
+    FileUploadModule,
+    MessagesModule
   ]
 })
 export class PrimeNgModule { }

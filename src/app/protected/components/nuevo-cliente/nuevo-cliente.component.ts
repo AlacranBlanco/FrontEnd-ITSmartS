@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ClienteService } from '../../services/cliente.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 
 declare const H: any;
@@ -14,8 +15,10 @@ declare const H: any;
   styles: [
   ]
 })
-export class NuevoClienteComponent implements OnInit {
+export class NuevoClienteComponent implements OnInit, OnDestroy {
 
+  // Cancelador de suscripciones
+  suscripciones!: Subscription;
 
   // formulario reactivo
   miForm: FormGroup = this._formBuilder.group({
@@ -28,17 +31,21 @@ export class NuevoClienteComponent implements OnInit {
     lat: ['', [Validators.required]],
     lng: ['', [Validators.required]],
     viewportX: [''],
-    viewportY: ['']
+    viewportY: [''],
+    image: ['']
 
   })
 
   routingServices: any;
   markersAux: any;
+  urlTemp: any;
+  file!: File;
 
   constructor(private _formBuilder: FormBuilder,
               private _clienteService: ClienteService,
-              private _router: Router) { }
-
+              private _router: Router,
+              ) { }
+  
   ngOnInit(): void {
       let platform = new H.service.Platform({
         'apikey': 'YhA5xgsmd3zKjwc0-wajWqUaTNXNyIp74swdc6DESQk',
@@ -98,33 +105,67 @@ export class NuevoClienteComponent implements OnInit {
 
     }
 
+    ngOnDestroy(): void {
+      if(this.suscripciones)
+          this.suscripciones.unsubscribe();
+    }
+  
+
+    upload(event) {
+
+      if (event.target.files.length == 0) {
+        return;
+     }
+
+     const tipoArchivo = event.target.files[0].type;
+
+     if(tipoArchivo === "image/jpeg" || tipoArchivo === "image/png"){
+         this.file = event.target.files[0];
+     } else {
+          Swal.fire(
+            'Error',
+            'El tipo de archivo no es válido',
+            'error'
+          )
+          return;
+     }
+
+     const reader = new FileReader();
+     reader.readAsDataURL(this.file);
+     reader.onload = (e) =>{
+       this.miForm.controls['image'].setValue(e.target?.result);
+       this.urlTemp = e.target?.result;
+     }
+    
+    }
 
     agregar(){
-      this._clienteService.nuevoCliente(this.miForm.value)
-              .subscribe(res => {
-                if(res._id){
-                  this.miForm.reset();
-                  Swal.fire({
-                    title: 'Success',
-                    text: "Cliente registrado correctamente",
-                    icon: 'success',
-                    showCancelButton: false,
-                    confirmButtonColor: '#3085d6',
-                    allowOutsideClick: false,
-                    confirmButtonText: 'Entendido!'
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                      this._router.navigate(['cliente'])
-                    }
-                  })
-                    
-                } else {
-                  Swal.fire(
-                    'Error',
-                    `${res}`,
-                    'error'
-                  )
+     this.suscripciones.add(this._clienteService.nuevoCliente(this.miForm.value)
+          .subscribe(res => {
+            if(res._id){
+              this.miForm.reset();
+              Swal.fire({
+                title: 'Success',
+                text: "Cliente registrado correctamente",
+                icon: 'success',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                allowOutsideClick: false,
+                confirmButtonText: 'Entendido!'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this._router.navigate(['cliente'])
                 }
-            })
+              })
+                
+            } else {
+              Swal.fire(
+                'Error',
+                `${res}`,
+                'error'
+              )
+            }
+        })
+    );
     }
 }

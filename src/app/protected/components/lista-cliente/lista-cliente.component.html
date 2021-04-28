@@ -13,8 +13,8 @@
                 <i class="pi pi-search"></i>
                 <input pInputText type="text" (input)="clienteslist.filterGlobal($any($event.target).value, 'contains')"  placeholder="Buscar" />
             </span>
-            <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success p-mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
-            <button pButton pRipple type="button" label="Nuevo" class="p-button-outlined p-button-info" [routerLink]="['/cliente/nuevo']"></button>
+            <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" label="Exportar" class="p-button-success p-button-outlined p-mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+            <button pButton pRipple type="button" icon="pi pi-save" label="Nuevo" class="p-button-outlined p-button-info" [routerLink]="['/cliente/nuevo']"></button>
         </div>
     </ng-template>
     <ng-template pTemplate="header">
@@ -31,15 +31,19 @@
     </ng-template>
     <ng-template pTemplate="body" let-cliente let-rowIndex="rowIndex">
         <tr>
-            <td>{{cliente.name}} {{cliente.mName}} {{cliente.lName}}</td>
+            <td>
+                <img [alt]="cliente.name" [src]="!cliente.image ? 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fclipground.com%2Fimages%2Fimg_avatar2-png-9.png&f=1&nofb=1': cliente.image" width="32" class="p-mr-2" style="vertical-align: middle; border-radius: 50%;" />
+                <span class="image-text">{{cliente.name}} {{cliente.mName}} </span>
+            </td>
+            <!-- <td>{{cliente.name}} {{cliente.mName}} {{cliente.lName}}</td> -->
             <td>{{cliente.phoneNumber}}</td>
             <td>{{cliente.email}}</td>
             <td>{{cliente.creation}}</td>
             <td>{{cliente.lat | number}}</td>
             <td>{{cliente.lng | number}}</td>
             <td>
-                <button pButton pRipple type="button" label="Editar" class="p-button-outlined p-button-info p-mr-2" [routerLink]="['/cliente/editar', cliente._id]"></button>
-                <button pButton pRipple type="button" label="Eliminar" class="p-button-outlined p-button-danger" (click)="eliminar(cliente._id, rowIndex)" pTooltip="PDF" tooltipPosition="bottom"></button>
+                <button pButton pRipple type="button" icon="pi pi-user-edit" label="Editar" class="p-button-outlined p-button-info p-mr-2" [routerLink]="['/cliente/editar', cliente._id]"></button>
+                <button pButton pRipple type="button" icon="pi pi-user-minus" label="Eliminar" class="p-button-outlined p-button-danger" (click)="eliminar(cliente._id, rowIndex)" pTooltip="PDF" tooltipPosition="bottom"></button>
             </td>
         </tr>
     </ng-template>

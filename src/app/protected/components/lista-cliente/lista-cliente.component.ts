@@ -1,24 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ClienteService } from '../../services/cliente.service';
 import { Cliente } from '../../interfaces/cliente.interface';
 import Swal from 'sweetalert2';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-lista-cliente',
   templateUrl: './lista-cliente.component.html',
   styleUrls: ['./listStyle.scss']
 })
-export class ListaClienteComponent implements OnInit {
+export class ListaClienteComponent implements OnInit, OnDestroy {
+
+  // Cancelador de suscripciones
+  suscripciones: Subscription[] = [];
 
   clientes: Cliente[] = [];
 
   constructor(private _clienteService: ClienteService) { }
+ 
 
   ngOnInit(): void {
-    this._clienteService.getClientes().subscribe((clientes) => this.clientes = clientes);
+    this.suscripciones.push(this._clienteService.getClientes().subscribe((clientes) => this.clientes = clientes));
+  }
 
-  
-
+  ngOnDestroy(): void {
+    this.suscripciones.forEach(sub => sub.unsubscribe());
   }
 
   eliminar(_id: string, i: number){
@@ -31,7 +37,7 @@ export class ListaClienteComponent implements OnInit {
       confirmButtonText: 'Entendido!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this._clienteService.eliminarClienteById(_id).subscribe();
+        this.suscripciones.push(this._clienteService.eliminarClienteById(_id).subscribe());
         this.clientes = this.clientes.filter(cliente => cliente._id !== _id);
       }
     })

@@ -6,6 +6,27 @@
         <p-fieldset legend="Nuevo" [toggleable]="true">
             <form (ngSubmit)="agregar()" autocomplete="off" [formGroup]="miForm">
                 <div class="p-fluid p-formgrid p-grid">
+
+                   
+                    <div class="p-field p-col-12 p-md-3">
+                        <input #fileUpload type="file" (click)="fileUpload.value"(change)="upload($event)" style="display:none" accept="image/*">
+                        <button pButton pRipple icon="pi pi-image" type="button" label="Imagen" class="p-button-secondary p-button-outlined"  (click)="fileUpload.click()">  </button>
+                    </div>
+
+                    
+                    <div class="p-field p-col-12 p-md-2">
+                    </div>
+
+                    <div class="p-field p-col-12 p-md-5" style="text-align: center;" >
+                        <p-fieldset legend="Foto" [toggleable]="true"  *ngIf="urlTemp">
+                            <img [src]="urlTemp" alt="imagen" width="80"  style="border-radius:20px;" >
+                        </p-fieldset>
+                    </div>
+
+                    <div class="p-field p-col-12 p-md-2">
+                    </div>
+
+
                     <div class="p-field p-col-12 p-md-4">
                         <label for="Nombre">Nombre</label>
                         <input id="Nombre" type="text" pInputText formControlName="name"> 
@@ -40,7 +61,7 @@
                         
                     </div>
                     <div class="p-field p-sm-12">
-                        <button pButton pRipple type="submit" label="Guardar" class="float-end p-button-info" [disabled]="!miForm.valid"></button>
+                        <button pButton pRipple type="submit" label="Guardar" class="float-end p-button-info p-button-outlined" [disabled]="!miForm.valid"></button>
                     </div>
                 </div>
             </form>

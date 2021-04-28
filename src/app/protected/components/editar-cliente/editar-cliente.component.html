@@ -3,9 +3,29 @@
 <br>
 <div class="p-grid">
     <div class="p-col p-md-6">
-        <p-fieldset legend="Nuevo" [toggleable]="true">
+        <p-fieldset legend="Editar" [toggleable]="true">
             <form (ngSubmit)="editar()" autocomplete="off" [formGroup]="miForm">
                 <div class="p-fluid p-formgrid p-grid">
+
+
+                    <div class="p-field p-col-12 p-md-3">
+                        <input #fileUpload type="file" (click)="fileUpload.value"(change)="upload($event)" style="display:none" accept="image/*">
+                        <button pButton pRipple icon="pi pi-image" type="button" label="Imagen" class="p-button-secondary p-button-outlined"  (click)="fileUpload.click()">  </button>
+                    </div>
+
+                    
+                    <div class="p-field p-col-12 p-md-2">
+                    </div>
+
+                    <div class="p-field p-col-12 p-md-5" style="text-align: center;" >
+                        <p-fieldset legend="Foto" [toggleable]="true">
+                            <img [src]="!miForm.controls['image']?.value ? 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fclipground.com%2Fimages%2Fimg_avatar2-png-9.png&f=1&nofb=1': miForm.controls['image']?.value" alt="imagen" width="80"  style="border-radius:20px;" >
+                        </p-fieldset>
+                    </div>
+
+                    <div class="p-field p-col-12 p-md-2">
+                    </div>
+
                     <div class="p-field p-col-12 p-md-4">
                             <label  for="Nombre">Nombre</label>
                             <input id="Nombre" type="text" pInputText formControlName="name"> 
@@ -40,7 +60,7 @@
                         
                     </div>
                     <div class="p-field p-sm-12">
-                        <button pButton pRipple type="submit" label="Editar" class="float-end p-button-info" [disabled]="!miForm.valid"></button>
+                        <button pButton pRipple type="submit" label="Editar" class="float-end p-button-info p-button-outlined" [disabled]="!miForm.valid"></button>
                     </div>
                 </div>
             </form>
