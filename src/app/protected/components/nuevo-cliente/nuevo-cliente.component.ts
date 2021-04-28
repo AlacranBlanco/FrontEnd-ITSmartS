@@ -18,7 +18,7 @@ declare const H: any;
 export class NuevoClienteComponent implements OnInit, OnDestroy {
 
   // Cancelador de suscripciones
-  suscripciones!: Subscription;
+  suscripciones: Subscription = new Subscription();
 
   // formulario reactivo
   miForm: FormGroup = this._formBuilder.group({

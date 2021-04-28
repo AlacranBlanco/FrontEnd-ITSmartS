@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 
   // Cancelador de suscripciones
-  suscripcion!: Subscription;
+  suscripcion: Subscription = new Subscription();
 
   auth!: Auth;
 
