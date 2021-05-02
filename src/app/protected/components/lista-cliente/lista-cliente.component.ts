@@ -65,7 +65,6 @@ export class ListaClienteComponent implements OnInit, OnDestroy {
     
   }
 
-  
   exportExcel(){
     import("xlsx").then(xlsx => {
       const worksheet = xlsx.utils.json_to_sheet(this.clientes);
